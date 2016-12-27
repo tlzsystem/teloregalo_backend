@@ -17,10 +17,9 @@ from rest_framework.reverse import reverse
 def api_root(request, format=None):
     return Response({
         'category': reverse('category-list', request=request, format= format),
-        'status': reverse('status-list', request=request, format= format)
+        'status': reverse('status-list', request=request, format= format),
+        'publication': reverse('publication-list', request=request, format=format)
     })
-
-
 
 # Category
 
@@ -31,17 +30,9 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 # Publications
 
-class PublicationList(mixins.ListModelMixin,
-                      mixins.CreateModelMixin,
-                      generics.GenericAPIView):
+class PublicationViewSet(viewsets.ModelViewSet):
     queryset = Publication.objects.all()
     serializer_class = PublicationSerializers
-
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
 
 # Status
 
